@@ -23,6 +23,7 @@ def findNoOfSwaps(arr):
             result += 1
 
             index = hashMap[sortedArray[i]]
+            # update the index of the element
             hashMap[arr[i]] = index
 
             # swap the elements
