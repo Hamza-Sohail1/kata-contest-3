@@ -5,37 +5,49 @@ import re
 import sys
 
 
-def findNoOfSwaps(arr):
+def lilysHomework(arr):
+    # we are calculating absolute difference so sometime if we sort in descending then probably less number of swaps will be needed
+    sort = sorted(arr)
+    rev = arr[::-1]
+
     # hashMap for storing in key : value pair. Use for storing indexes of values in array
     hashMap = {}
 
-    result = 0
-
-    for i in range(len(arr)):
+    for i in range(n):
         # storing value as key and index as value
-        hashMap[arr[i]] = i
+        hashMap[sort[i]] = i
 
-    sortedArray = sorted(arr)
+    swaps = 0
+    i = 0
 
-    for i in range(len(arr)):
-        if arr[i] != sortedArray[i]:
-            # increment the counter
-            result += 1
+    while i < len(arr):
+        if sort[i] == arr[i]:
+            i += 1
+            continue
+        # increment the count of swap
+        swaps += 1
+        index = hashMap[arr[i]]
+        # swap the elements
+        arr[index], arr[i] = arr[i], arr[index]
+        hashMap[sort[i]] += 1
 
-            index = hashMap[sortedArray[i]]
-            # update the index of the element
-            hashMap[arr[i]] = index
+    # for reversed array
+    hashMap = {}
+    for i in range(n):
+        hashMap[sort[i]] = i
 
-            # swap the elements
-            arr[i], arr[index] = arr[index], arr[i]
+    swaps_rev = 0
+    i = 0
+    while i < len(arr):
+        if sort[i] == rev[i]:
+            i += 1
+            continue
+        swaps_rev += 1
+        index = hashMap[rev[i]]
+        rev[index], rev[i] = rev[i], rev[index]
+        hashMap[sort[i]] += 1
 
-    return result
-
-
-def lilysHomework(arr):
-    # we are calculating absolute difference so sometime if we sort in descending then probably less number of swaps will be needed
-    # so instead of calculating again for descending we send reverse of array
-    return min(findNoOfSwaps(arr), findNoOfSwaps(arr[::-1]))
+    return min(swaps, swaps_rev)
 
 
 if __name__ == "__main__":
@@ -43,9 +55,8 @@ if __name__ == "__main__":
 
     n = int(input().strip())
     arr = list(map(int, input().rstrip().split()))
-    # arr = [3, 7, 25, 15]
 
-    result = min(lilysHomework(arr), lilysHomework(arr[::-1]))
+    result = lilysHomework(arr)
 
     fptr.write(str(result) + "\n")
 
