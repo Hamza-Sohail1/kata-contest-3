@@ -46,7 +46,7 @@ def highestValuePalindrome(s, n, k):
     while left <= right and k > 0:
         # string is of odd length and we are at center
         if left == right and k > 0:
-            result[left] = result[right] = "9"
+            result[left] = "9"
             k -= 1
             continue
 
